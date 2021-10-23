@@ -18,24 +18,31 @@
  * @return {ListNode}
  */
 var addTwoNumbers = function(l1, l2) {
-  let currNode = head = new ListNode()
+  let head = currNode = new ListNode()
   let carry = 0
-
   while (l1 || l2) {
-    currNode.next = new ListNode()
-    currNode = currNode.next
-    let val = (l1 ? l1.val : 0) + (l2 ? l2.val : 0) + carry
-    if (val >= 10) {
-      currNode.val = val % 10
-      carry = 1
+    if (!l1) {
+      let sum = l2.val + carry
+      currNode.next = new ListNode(sum % 10)
+      currNode = currNode.next
+      l2 = l2.next
+      carry = Math.floor(sum / 10)
+    } else if (!l2) {
+      let sum = l1.val + carry
+      currNode.next = new ListNode(sum % 10)
+      currNode = currNode.next
+      l1 = l1.next
+      carry = Math.floor(sum / 10)
     } else {
-      currNode.val = val
-      carry = 0
+      let sum = l1.val + l2.val + carry
+      currNode.next = new ListNode(sum % 10)
+      currNode = currNode.next
+      l1 = l1 ? l1.next : null
+      l2 = l2 ? l2.next : null
+      carry = Math.floor(sum / 10)
     }
-    l1 = l1 ? l1.next : null
-    l2 = l2 ? l2.next : null
   }
-  if (carry !== 0) {
+  if (carry > 0) {
     currNode.next = new ListNode(carry)
   }
   return head.next
