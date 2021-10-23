@@ -10,25 +10,23 @@
  * @return {boolean}
  */
 var isValid = function(s) {
-  if (s.length % 2 !== 0) {
-    return false
-  }
+  if (s.length === 0 || s.length % 2 !== 0) return false
   let stack = []
-  for (subStr of s) {
-    let top = stack[stack.length-1]
-    if (subStr === ")" && top === "(") {
+  for (let c of s) {
+    let top = stack[stack.length - 1]
+    if (c === "}" && top === "{") {
       stack.pop()
       continue
     }
-    if (subStr === "]" && top === "[") {
+    if (c === ")" && top === "(") {
       stack.pop()
       continue
     }
-    if (subStr === "}" && top === "{") {
+    if (c === "]" && top === "[") {
       stack.pop()
       continue
     }
-    stack.push(subStr)
+    stack.push(c)
   }
   return stack.length === 0
 };
