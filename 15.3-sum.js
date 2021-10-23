@@ -10,39 +10,45 @@
  * @return {number[][]}
  */
 var threeSum = function(nums) {
-  if (nums.length < 3) return []
-  // sort ascending for simple determinism
+  let tripletSum = []
+  if (nums.length < 3) return tripletSum
+  // sort and shift 3 pointers
+  // O(nlog(n) + n^2)
   nums.sort((a, b) => a - b)
-  let tripletList = []
   for (let i = 0; i < nums.length - 2; i++) {
-    if (nums[i] > 0) return tripletList
+    // can't ever reach a sum of 0
+    if (nums[i] > 0) return tripletSum
+    // avoid checking repeated digits
     if (i > 0 && nums[i] === nums[i-1]) continue
     let j = i + 1
-    let k = nums.length-1
+    let k = nums.length - 1
     while (j < k) {
       let sum = nums[i] + nums[j] + nums[k]
-      if (sum > 0) {
-        k -= 1
+      if (sum === 0) {
+        tripletSum.push([nums[i], nums[j], nums[k]])
+        k--
+        j++
+      } else if (sum > 0) {
+        k--
+        continue
+      } else {
+        j++
         continue
       }
-      if (sum < 0) {
-        j += 1
-        continue
+      // avoid checking repeated digits
+      while (nums[k] === nums[k+1]) {
+        k--
       }
-      tripletList.push([nums[i], nums[j], nums[k]])
-      while (nums[j] === nums[j+1]) {
-        j += 1
-        if (j >= k) break
+      while (nums[j] === nums[j-1]) {
+        j++
       }
-      while (nums[k] === nums[k-1]) {
-        k -= 1
-        if (j >= k) break
-      }
-      j += 1
-      k -= 1
     }
   }
-  return tripletList
+  return tripletSum
 };
 // @lc code=end
 
+
+console.log(threeSum([-1,0,1,2,-1,-4]))
+console.log(threeSum([-1,0,1,2,-1,-4,-2,-3,3,0,4]))
+console.log(threeSum([-2,0,1,1,2]))
