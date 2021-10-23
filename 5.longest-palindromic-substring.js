@@ -10,18 +10,37 @@
  * @return {string}
  */
 var longestPalindrome = function(s) {
-  let leftIndex = 0, rightIndex = 0
-  // Check every possible palindrome outward from i
+  // middle-out, check every possible palindrome
+  // O(n^2)
+  let res = ""
+  let resLen = 0
+
   for (let i = 0; i < s.length; i++) {
-    for (let j of [i, i+1]) {
-      for (l = i, r = j; s[l] && s[l] === s[r]; l--, r++) {
-        if ((r - l + 1) > (rightIndex - leftIndex + 1)) {
-          [leftIndex, rightIndex] = [l, r]
-        }
+    // odd length
+    let [left, right] = [i, i]
+    while (left >= 0 && right < s.length && s[left] === s[right]) {
+      if ((right - left + 1) > resLen) {
+        res = s.slice(left, right + 1)
+        resLen = right  - left + 1
       }
+      left--
+      right++
+    }
+    // even length
+    [left, right] = [i, i + 1]
+    while (left >= 0 && right < s.length && s[left] === s[right]) {
+      if ((right - left + 1) > resLen) {
+        res = s.slice(left, right + 1)
+        resLen = right - left + 1
+      }
+      left--
+      right++
     }
   }
-  return s.slice(leftIndex, rightIndex+1)
+
+  return res
 };
 // @lc code=end
 
+console.log(longestPalindrome("aaaabbaa"))
+console.log(longestPalindrome("aaaa"))
