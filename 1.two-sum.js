@@ -11,13 +11,14 @@
  * @return {number[]}
  */
 var twoSum = function(nums, target) {
-  const numMap = {}
-  for (let i = 0; i < nums.length; i++) {
-    if (target-nums[i] in numMap) {
-      return [numMap[target-nums[i]],i]
+  let numMap = new Map()
+  for (let [index, num] of nums.entries()) {
+    if (numMap.has(num)) {
+      return [numMap.get(num), index]
     }
-    numMap[nums[i]] = i
+    numMap.set(target - num, index)
   }
+  throw new Error("No two sum found")
 };
 // @lc code=end
 
