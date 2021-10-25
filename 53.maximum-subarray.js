@@ -10,13 +10,13 @@
  * @return {number}
  */
 var maxSubArray = function(nums) {
-  let currSum = 0
   let maxSum = nums[0]
-  nums.forEach((v) => {
-    currSum += v
-    if (currSum > maxSum) { maxSum = currSum }
-    if (currSum < 0) { currSum = 0 }
-  })
+  let currSum = 0
+  for (let num of nums) {
+    currSum += num
+    if (currSum > maxSum) maxSum = currSum
+    if (currSum < 0) currSum = 0
+  }
   return maxSum
 };
 // @lc code=end
