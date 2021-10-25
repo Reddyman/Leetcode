@@ -10,17 +10,20 @@
  * @return {number}
  */
 var removeDuplicates = function(nums) {
-  let currVal = nums[0]
-  let listIndex = 1
+  if (nums.length === 0) return nums
+  let prev = nums[0]
+  let counter = nums.length
   for (let i = 1; i < nums.length; i++) {
-    if (currVal === nums[i]) {
+    if (prev === nums[i]) {
+      nums.splice(i, 1)
+      counter--
+      i--
       continue
+    } else {
+      prev = nums[i]
     }
-    nums[listIndex] = nums[i]
-    currVal = nums[i]
-    listIndex++
   }
-  return listIndex
+  return counter
 };
 // @lc code=end
 
