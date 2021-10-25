@@ -13,7 +13,7 @@
 var strStr = function(haystack, needle) {
   let needleLen = needle.length
   if (needleLen === 0) return 0
-  for(let i = 0; i <= haystack.length-needleLen; i++) {
+  for (let i = 0; i <= haystack.length - needleLen; i++) {
     if (haystack.slice(i, i + needleLen) === needle) {
       return i
     }
