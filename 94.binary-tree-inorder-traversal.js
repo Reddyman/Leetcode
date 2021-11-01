@@ -18,15 +18,16 @@
  * @return {number[]}
  */
 var inorderTraversal = function(root) {
+  // O(n) time
+  // O(n) space
   let traverseOrder = []
-  let traverseNode = (node) => {
-    if (node) {
-      traverseNode(node.left)
-      traverseOrder.push(node.val)
-      traverseNode(node.right)
-    }
+  let traverseNodes = node => {
+    if (!node) return
+    traverseNodes(node.left)
+    traverseOrder.push(node.val)
+    traverseNodes(node.right)
   }
-  traverseNode(root)
+  traverseNodes(root)
   return traverseOrder
 };
 // @lc code=end
