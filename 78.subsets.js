@@ -11,42 +11,32 @@
  */
 var subsets = function(nums) {
   // DFS recursive approach
+  // sort all nums
   // start at every index, only add nums larger
-  // than the last num in the array
   // base cases
   // 1. No more nums
-  // 2. No more nums greater than last num
   // O(n^2) time O(n^2) space
 
   let numSets = [[]]
-  let maxNum  = Math.max(nums)
-  let numCombos = new Set()
+  nums.sort((a, b) => a - b)
   const dfsHelper = (currNums, rNums) => {
-    if (currNums.length > 0) {
-      currNums.sort((a, b) => a - b)
-      numCombos.add(currNums.join("_"))
-    }
     // base cases
     if (rNums.length === 0) return
 
     // add nums larger than last num
+    // nums are already sorted already
     for (let i = 0; i < rNums.length; i++) {
-      let newCurrNums = [rNums[i], ...currNums]
-      let newRNums = [...rNums]
-      newRNums.splice(i, 1)
+      let newCurrNums = [...currNums, rNums[i]]
+      numSets.push(newCurrNums)
+      let newRNums = rNums.slice(i+1)
+      // console.log(newRNums)
       dfsHelper(newCurrNums, newRNums)
     }
   }
 
   dfsHelper([], nums)
 
-  for (let combo of numCombos) {
-    numSets.push(combo.split("_"))
-  }
-
   return numSets
 };
 // @lc code=end
 
-
-console.log(subsets([1,2,3]))
