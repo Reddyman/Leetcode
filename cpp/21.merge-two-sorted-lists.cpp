@@ -20,40 +20,30 @@ class Solution
 public:
     ListNode *mergeTwoLists(ListNode *list1, ListNode *list2)
     {
-        ListNode *mergeHead = new ListNode();
+        // iterate through both lists together
+        // add smaller value to new linked list
+        // O(max(n, m)) time O(n+m) space
+        ListNode *head = new ListNode();
         ListNode *currNode = new ListNode();
-        mergeHead->next = currNode;
+        head->next = currNode;
         while (list1 || list2)
         {
-            if (!list1)
+            if (!list1 || (list2 && list1->val > list2->val))
             {
-                currNode->next = new ListNode(list2->val);
+                ListNode *newNode = new ListNode(list2->val);
+                currNode->next = newNode;
+                currNode = currNode->next;
                 list2 = list2->next;
-                currNode = currNode->next;
             }
-            else if (!list2)
+            else if (!list2 || (list1 && list2->val >= list1->val))
             {
-                currNode->next = new ListNode(list1->val);
+                ListNode *newNode = new ListNode(list1->val);
+                currNode->next = newNode;
+                currNode = currNode->next;
                 list1 = list1->next;
-                currNode = currNode->next;
-            }
-            else
-            {
-                if (list1->val < list2->val)
-                {
-                    currNode->next = new ListNode(list1->val);
-                    list1 = list1->next;
-                    currNode = currNode->next;
-                }
-                else
-                {
-                    currNode->next = new ListNode(list2->val);
-                    list2 = list2->next;
-                    currNode = currNode->next;
-                }
             }
         }
-        return mergeHead->next->next;
+        return head->next->next;
     }
 };
 // @lc code=end
