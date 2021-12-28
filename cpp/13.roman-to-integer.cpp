@@ -11,6 +11,10 @@ class Solution
 public:
     int romanToInt(string s)
     {
+        // store char:val mapping in hashmap
+        // iterate over s, checking every curr
+        // and prev, adding/subtracting
+        // O(n) time O(k) space
         unordered_map<char, int> mappings(
             {{'I', 1},
              {'V', 5},

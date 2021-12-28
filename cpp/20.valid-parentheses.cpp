@@ -10,6 +10,8 @@ class Solution
 public:
     bool isValid(string s)
     {
+        // push / pop from stack
+        // O(n) time O(n) space
         stack<char> stacker;
         for (char &c : s)
         {
